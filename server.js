@@ -1,18 +1,10 @@
-const express = require('express')
 const http = require("http")
 const {Server} = require("socket.io")
-``
-const app = express()
-const httpServer = http.createServer(app)
-// const httpServer = http.createServer()
+const httpServer = http.createServer()
 const io = new Server(httpServer)
 
-app.get("/",  (req, res) => {
-    res.send("hi")
-})
-
 io.on("connection", (socket) => { 
-    console.log('connection success ' + socket.id)
+    console.log('connection success', `socket id: ${socket.id}`)
 
     socket.on("say", (data) => {
         console.log(data)
@@ -24,7 +16,7 @@ io.on("connection", (socket) => {
     })
 
     socket.onAny((event, ...args) => {
-        console.log(`got ${event}`)
+        console.log(`event: ${event}`)
     })
 })
 
